@@ -14,8 +14,7 @@ final class RMLocationsViewController: UIViewController {
 
         view.backgroundColor = .systemBackground
         title = "Locations"
+        
     }
     
-
-
 }
