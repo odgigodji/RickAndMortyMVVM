@@ -28,7 +28,7 @@ class RMCharacterListView: UIView {
         collectionView.isHidden = true
         collectionView.alpha = 0
         collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "cell")
+        collectionView.register(RMCharacterCollectionViewCell.self, forCellWithReuseIdentifier: RMCharacterCollectionViewCell.cellIdentifier)
         return collectionView
     }()
     
@@ -42,6 +42,7 @@ class RMCharacterListView: UIView {
         addConstraints()
         
         spinner.startAnimating()
+        viewModel.delegate = self
         viewModel.fetchCharacters()
         
         setUpCollectionView()
@@ -69,16 +70,17 @@ class RMCharacterListView: UIView {
         collectionView.dataSource = viewModel
         collectionView.delegate = viewModel
         
-        DispatchQueue.main.async {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
-                self.spinner.stopAnimating()
-                
-                self.collectionView.isHidden = false
-                
-                UIView.animate(withDuration: 0.4) {
-                    self.collectionView.alpha = 1
-                }
-            })
+        
+    }
+}
+
+extension RMCharacterListView: RMCharacterListViewModelDelegate {
+    func didLoadInitialCharacters() {
+        spinner.stopAnimating()
+        collectionView.isHidden = false
+        collectionView.reloadData() // Initial fetch of characters
+        UIView.animate(withDuration: 0.5) {
+            self.collectionView.alpha = 1
         }
     }
 }

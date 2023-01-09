@@ -29,6 +29,5 @@ final class RMCharactersViewController: UIViewController {
             characterListView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor),
             characterListView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor)
         ])
-        
     }
 }
